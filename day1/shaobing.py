@@ -52,7 +52,7 @@ if __name__ == "__main__":
         Image.fromarray(result).save(output_image)
         print(f"成功生成真彩色图像并保存至: {output_image}")
 
-        # 可选：显示图像
+        # 可选显示图像
         # import matplotlib.pyplot as plt
         # plt.imshow(result)
         # plt.axis('off')
