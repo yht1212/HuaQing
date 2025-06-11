@@ -7,7 +7,7 @@ from torch import nn
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 
-from day2.alex import AlexNet
+from day2.alex import alex
 from model import *
 
 # 准备数据集
@@ -34,7 +34,7 @@ test_loader = DataLoader(test_data,batch_size=64)
 # 创建网络模型
 
 #chen = Chen()
-chen = AlexNet(num_classes=10)
+chen = alex(num_classes=10)
 
 
 # 创建损失函数
@@ -48,7 +48,7 @@ optim = torch.optim.SGD(chen.parameters(),lr=learning_rate)
 # 设置训练网络的一些参数
 total_train_step = 0 #记录训练的次数
 total_test_step = 0 # 记录测试的次数
-epoch = 10 # 训练的轮数
+epoch = 100 # 训练的轮数
 
 # 添加tensorboard
 writer = SummaryWriter("../day2/logs_train")
