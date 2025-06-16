@@ -70,6 +70,7 @@ from ultralytics.nn.modules import (
     YOLOESegment,
     v10Detect,
     SE_Block,
+    MobileNetV4ConvSmall,
 )
 from ultralytics.utils import DEFAULT_CFG_DICT, DEFAULT_CFG_KEYS, LOGGER, YAML, colorstr, emojis
 from ultralytics.utils.checks import check_requirements, check_suffix, check_yaml
@@ -1738,11 +1739,20 @@ def parse_model(d, ch, verbose=True):
             c2 = args[0]
             c1 = ch[f]
             args = [*args[1:]]
+        elif m in frozenset({MobileNetV4ConvSmall}):
+            c2 = args[1]
+            c1 = args[2]
         else:
             c2 = ch[f]
 
-        m_ = torch.nn.Sequential(*(m(*args) for _ in range(n))) if n > 1 else m(*args)  # module
-        t = str(m)[8:-2].replace("__main__.", "")  # module type
+        if m in frozenset({MobileNetV4ConvSmall,}):
+            m_ =m(args[2])
+            t = "ultralytics.nn.modules.mobilenetv4"
+        else:
+            m_ = torch.nn.Sequential(*(m(*args) for _ in range(n))) if n > 1 else m(*args)  # module
+            t = str(m)[8:-2].replace("__main__.", "")  # module type
+
+        # t = str(m)[8:-2].replace("__main__.", "")  # module type
         m_.np = sum(x.numel() for x in m_.parameters())  # number params
         m_.i, m_.f, m_.type = i, f, t  # attach index, 'from' index, type
         if verbose:

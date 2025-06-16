@@ -102,7 +102,7 @@ from .transformer import (
     TransformerEncoderLayer,
     TransformerLayer,
 )
-
+from .mobilenet import MobileNetV4ConvSmall
 __all__ = (
     "Conv",
     "Conv2",
@@ -180,5 +180,6 @@ __all__ = (
     "TorchVision",
     "Index",
     "A2C2f",
-    "SE_Block"
+    "SE_Block",
+    "MobileNetV4ConvSmall"
 )
